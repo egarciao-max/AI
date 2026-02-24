@@ -16,8 +16,23 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '.'),
+          '@': path.resolve(__dirname, 'frontend/src'),
         }
-      }
+      },
+      build: {
+        outDir: 'dist',
+        sourcemap: true,
+        rollupOptions: {
+          input: 'frontend/src/index.html', // Specify index.html as entry point
+          output: {
+            manualChunks: {
+              vendor: ['axios']
+            }
+          }
+        },
+        assetsInlineLimit: 4096,
+        cssCodeSplit: true
+      },
+      publicDir: 'frontend/src'
     };
 });

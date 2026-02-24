@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  root: '.', // Keep root at current directory
+  root: 'frontend', // Set root to frontend directory
   build: {
     outDir: 'dist',
     sourcemap: true,
