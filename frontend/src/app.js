@@ -112,6 +112,19 @@ async function handleLogin(e) {
   };
 
   try {
+    // Check if backend is available
+    const backendAvailable = await api.isBackendAvailable();
+    
+    if (!backendAvailable) {
+      // Use mock data for demonstration
+      state.user = api.getMockUser();
+      localStorage.setItem('user_data', JSON.stringify(state.user));
+      setupUIForUser();
+      await loadChats();
+      alert('Demo mode: Using mock data since backend is not available');
+      return;
+    }
+
     const result = await api.login(credentials);
     if (result.requires2FA) {
       show2FAForm(result.userId);
@@ -194,6 +207,27 @@ async function handleSendMessage() {
   elements.messageInput.value = '';
 
   try {
+    // Check if backend is available
+    const backendAvailable = await api.isBackendAvailable();
+    
+    if (!backendAvailable) {
+      // Use mock response
+      const mockResponse = "¡Hola! Estoy respondiendo con datos de demostración ya que el backend no está disponible. Esta es una conversación de prueba para mostrar el funcionamiento de la interfaz.";
+      addMessageToUI(mockResponse, 'ai');
+      
+      if (!state.currentChat) {
+        state.currentChat = 'demo-chat-' + Date.now();
+        await loadChats();
+      }
+      
+      // Update message count
+      if (state.user) {
+        state.user.limits.used_today += 1;
+        elements.messageCount.textContent = `${state.user.limits.used_today}/${state.user.limits.daily_messages}`;
+      }
+      return;
+    }
+
     const result = await api.sendMessage(message, state.currentChat);
     addMessageToUI(result.response, 'ai');
     
