@@ -32,7 +32,7 @@ const rl = readline.createInterface({
 rl.question('🌐 Enter your Familia AI Backend URL (e.g., https://your-app.workers.dev): ', (backendUrl) => {
   if (!backendUrl) {
     console.log('❌ No URL provided. Using default URL.');
-    backendUrl = 'https://your-familia-ai-backend.workers.dev';
+    backendUrl = 'https://family-ai-backend.enriquegarciaoropeza.workers.dev';
   }
 
   // Validate URL format
@@ -41,7 +41,7 @@ rl.question('🌐 Enter your Familia AI Backend URL (e.g., https://your-app.work
   }
 
   // Update .env file
-  const oldUrl = 'https://your-familia-ai-backend.workers.dev';
+  const oldUrl = 'https://family-ai-backend.enriquegarciaoropeza.workers.dev';
   envContent = envContent.replace(oldUrl, backendUrl);
   
   fs.writeFileSync(envPath, envContent);
@@ -53,7 +53,7 @@ rl.question('🌐 Enter your Familia AI Backend URL (e.g., https://your-app.work
   console.log('\nNext steps:');
   console.log('1. Run: npm install');
   console.log('2. Run: npm run dev');
-  console.log('3. Open: http://localhost:5173');
+  console.log('3. Open: http://localhost:3000');
   
   rl.close();
 });

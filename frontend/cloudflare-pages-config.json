@@ -10,7 +10,7 @@
   "env": {
     "VITE_API_BASE_URL": {
       "description": "Familia AI Backend URL",
-      "value": "https://your-familia-ai-backend.workers.dev"
+      "value": "https://family-ai-backend.enriquegarciaoropeza.workers.dev"
     },
     "VITE_ENABLE_ADMIN_PANEL": {
       "description": "Enable admin panel functionality",
