@@ -1,0 +1,52 @@
+# Familia AI Frontend - Wrangler Configuration
+# For local development and debugging
+
+name = "familia-ai-frontend"
+main = "src/app.js"
+compatibility_date = "2024-01-01"
+
+# Local development settings
+[dev]
+ip = "0.0.0.0"
+port = 8787
+local_protocol = "http"
+
+# Build configuration
+[build]
+command = "npm run build"
+watch_dir = "src"
+upload.format = "service-worker"
+
+# Environment variables for local development
+[env.development]
+name = "familia-ai-frontend-dev"
+vars = { VITE_API_BASE_URL = "http://localhost:8787" }
+
+# Environment variables for preview
+[env.preview]
+name = "familia-ai-frontend-preview"
+vars = { VITE_API_BASE_URL = "https://your-familia-ai-backend.enriquegarciaoropeza.workers.dev" }
+
+# Environment variables for production
+[env.production]
+name = "familia-ai-frontend"
+vars = { VITE_API_BASE_URL = "https://your-familia-ai-backend.enriquegarciaoropezaworkers.dev" }
+
+# Routes for different environments
+[triggers]
+crons = ["0 0 * * *"]  # Daily cleanup
+
+# Compatibility flags
+compatibility_flags = [
+  "nodejs_compat"
+]
+
+# Experiments
+[experiments]
+buildCache = true
+watch = true
+
+# Site configuration
+[site]
+bucket = "./dist"
+entry-point = "workers-site"

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familia AI - Cloudflare Deployment Helper</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --bg: #f8f9fa;
+            --text: #333;
+            --card: #fff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="url"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: #000;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .env-vars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .env-var {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .env-var label {
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            display: block;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li::before {
+            content: "☐ ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .checklist li.done::before {
+            content: "✓ ";
+            color: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Familia AI - Cloudflare Deployment Helper</h1>
+        
+        <div class="status warning" id="warningStatus">
+            ⚠️ This tool helps you configure your deployment. You'll still need to visit Cloudflare Pages in your browser to complete the setup.
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Configure Your Backend URL</h3>
+            <div class="form-group">
+                <label for="backendUrl">Familia AI Backend URL:</label>
+                <input type="url" id="backendUrl" placeholder="https://your-familia-ai-backend.workers.dev" value="https://your-familia-ai-backend.workers.dev">
+            </div>
+            <button class="btn" onclick="configureEnvironment()">Configure Environment</button>
+            <button class="btn btn-warning" onclick="loadExample()">Load Example URL</button>
+        </div>
+
+        <div class="step" id="envStep" style="display: none;">
+            <h3>Step 2: Environment Variables for Cloudflare Pages</h3>
+            <p>Copy these environment variables and paste them into your Cloudflare Pages dashboard:</p>
+            
+            <div class="env-vars" id="envVarsContainer">
+                <!-- Environment variables will be generated here -->
+            </div>
+            
+            <button class="btn" onclick="copyToClipboard()">Copy All to Clipboard</button>
+            <button class="btn btn-success" onclick="downloadEnvFile()">Download .env File</button>
+        </div>
+
+        <div class="step" id="deploymentStep" style="display: none;">
+            <h3>Step 3: Deploy to Cloudflare Pages</h3>
+            
+            <div class="code-block">
+                <strong>Build Configuration:</strong><br>
+                Command: <code>npm run build</code><br>
+                Output Directory: <code>dist</code><br>
+                Framework: <code>Vite</code>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="https://pages.cloudflare.com/deploy" target="_blank" class="btn btn-success">
+                    🚀 One-Click Deploy to Cloudflare Pages
+                </a>
+                <a href="https://pages.cloudflare.com/" target="_blank" class="btn">
+                    📱 Go to Cloudflare Pages Dashboard
+                </a>
+            </div>
+
+            <h4>Manual Setup Instructions:</h4>
+            <ol>
+                <li>Go to <a href="https://pages.cloudflare.com/" target="_blank">Cloudflare Pages</a></li>
+                <li>Click "Create a new project"</li>
+                <li>Connect your Git repository</li>
+                <li>Configure build settings (use the configuration above)</li>
+                <li>Add the environment variables</li>
+                <li>Click "Save and Deploy"</li>
+            </ol>
+        </div>
+
+        <div class="step" id="postDeploymentStep" style="display: none;">
+            <h3>Step 4: Post-Deployment Checklist</h3>
+            <ul class="checklist">
+                <li id="check1">✅ Repository connected to Cloudflare Pages</li>
+                <li id="check2">✅ Build settings configured correctly</li>
+                <li id="check3">✅ Environment variables set</li>
+                <li id="check4">✅ Site deployed successfully</li>
+                <li id="check5">✅ Test the application</li>
+                <li id="check6">✅ Configure custom domain (optional)</li>
+            </ul>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-success" onclick="testDeployment()">Test Your Deployment</button>
+            </div>
+        </div>
+
+        <div class="status" id="resultStatus"></div>
+    </div>
+
+    <script>
+        // Environment variables template
+        const envTemplate = [
+            { name: 'VITE_API_BASE_URL', description: 'Your Familia AI Backend URL' },
+            { name: 'VITE_ENABLE_ADMIN_PANEL', value: 'true', description: 'Enable admin functionality' },
+            { name: 'VITE_ENABLE_REGISTRATION', value: 'true', description: 'Enable user registration' },
+            { name: 'VITE_MAX_MESSAGE_LENGTH', value: '1000', description: 'Maximum message length' },
+            { name: 'VITE_AUTO_SCROLL', value: 'true', description: 'Enable auto-scroll in chat' }
+        ];
+
+        function configureEnvironment() {
+            const backendUrl = document.getElementById('backendUrl').value.trim();
+            
+            if (!backendUrl) {
+                showStatus('error', 'Please enter your Familia AI Backend URL');
+                return;
+            }
+
+            // Update the template with the backend URL
+            envTemplate[0].value = backendUrl;
+
+            // Generate environment variables UI
+            generateEnvVars();
+            
+            // Show next steps
+            document.getElementById('envStep').style.display = 'block';
+            document.getElementById('deploymentStep').style.display = 'block';
+            document.getElementById('postDeploymentStep').style.display = 'block';
+            
+            showStatus('success', 'Environment configured successfully! 🎉');
+        }
+
+        function generateEnvVars() {
+            const container = document.getElementById('envVarsContainer');
+            container.innerHTML = '';
+
+            envTemplate.forEach(envVar => {
+                const div = document.createElement('div');
+                div.className = 'env-var';
+                div.innerHTML = `
+                    <label>${envVar.name}</label>
+                    <div class="code-block" style="margin: 0; padding: 5px 10px;">
+                        ${envVar.value || ''}
+                    </div>
+                    <small style="color: #666;">${envVar.description}</small>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function copyToClipboard() {
+            const envVars = envTemplate.map(envVar => `${envVar.name}=${envVar.value || ''}`).join('\n');
+            
+            navigator.clipboard.writeText(envVars).then(() => {
+                showStatus('success', 'Environment variables copied to clipboard! 📋');
+            }).catch(err => {
+                showStatus('error', 'Failed to copy to clipboard. Please copy manually.');
+            });
+        }
+
+        function downloadEnvFile() {
+            const envContent = envTemplate.map(envVar => `${envVar.name}=${envVar.value || ''}`).join('\n');
+            const blob = new Blob([envContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '.env';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showStatus('success', 'Environment file downloaded! 📥');
+        }
+
+        function loadExample() {
+            document.getElementById('backendUrl').value = 'https://example-familia-ai.workers.dev';
+            configureEnvironment();
+        }
+
+        function testDeployment() {
+            const backendUrl = document.getElementById('backendUrl').value.trim();
+            const siteUrl = prompt('Enter your deployed site URL (e.g., https://your-project.pages.dev):');
+            
+            if (!siteUrl) return;
+
+            // Test the connection
+            fetch(`${backendUrl}/api/health`)
+                .then(response => {
+                    if (response.ok) {
+                        showStatus('success', '✅ Backend connection successful! Your site should be working correctly.');
+                    } else {
+                        showStatus('error', '❌ Backend connection failed. Please check your backend URL and CORS settings.');
+                    }
+                })
+                .catch(error => {
+                    showStatus('error', `❌ Connection error: ${error.message}. Please check your network and URLs.`);
+                });
+        }
+
+        function showStatus(type, message) {
+            const status = document.getElementById('resultStatus');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            status.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize with example
+        window.onload = function() {
+            loadExample();
+        };
+    </script>
+</body>
+</html>

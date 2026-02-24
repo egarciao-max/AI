@@ -1,0 +1,22 @@
+{
+  "name": "familia-ai-backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-18",
+  "compatibility_flags": ["nodejs_compat"],  // ← ESTO ES CRÍTICO
+  "vars": {
+    "PASSWORD_SALT": "familia-2026-secreto-aleatorio-123",
+    "FAMILY_SECRET_CODE": "OROPEZA2026",
+    "ADMIN_EMAIL": "quique@oropezas.com",
+    "ALLOWED_ORIGIN": "https://ai.oropezas.com"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "GOOGLE_API_KEY": "",
+        "RESEND_API_KEY": "",
+        "SUPABASE_URL": "",
+        "SUPABASE_KEY": ""
+      }
+    }
+  }
+}

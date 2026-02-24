@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familia AI</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login/Register Section -->
+        <div id="auth-section">
+            <div id="login-form">
+                <h2>Iniciar Sesión</h2>
+                <form>
+                    <input type="email" id="email" placeholder="Correo electrónico" required>
+                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <input type="text" id="family-code" placeholder="Código familiar" required>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+            </div>
+            
+            <div id="register-form" style="display: none;">
+                <h2>Registrarse</h2>
+                <form>
+                    <input type="text" id="name" placeholder="Nombre completo" required>
+                    <input type="email" id="reg-email" placeholder="Correo electrónico" required>
+                    <input type="password" id="reg-password" placeholder="Contraseña" required>
+                    <input type="number" id="age" placeholder="Edad" required>
+                    <input type="email" id="parent-email" placeholder="Correo de padre/tutor" required>
+                    <input type="text" id="favorite-color" placeholder="Color favorito">
+                    <input type="text" id="hobbies" placeholder="Aficiones (separadas por comas)">
+                    <button type="submit">Registrarse</button>
+                </form>
+                <p>¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a></p>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chat-section" style="display: none;">
+            <header>
+                <h1>Familia AI</h1>
+                <div id="user-info">
+                    <span id="user-name"></span>
+                    <span id="user-role"></span>
+                    <span id="message-count"></span>
+                    <button id="logout-button">Cerrar Sesión</button>
+                </div>
+            </header>
+            
+            <div class="chat-container">
+                <aside id="chat-sidebar">
+                    <div class="sidebar-header">
+                        <h3>Conversaciones</h3>
+                        <button id="new-chat-button">Nueva Conversación</button>
+                    </div>
+                    <div id="chat-list">
+                        <!-- Chat items will be populated here -->
+                    </div>
+                </aside>
+                
+                <main id="chat-main">
+                    <div id="chat-history">
+                        <!-- Messages will be populated here -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
+                        <button id="send-button">Enviar</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel" style="display: none;">
+            <h2>Panel de Administración</h2>
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3>Estadísticas</h3>
+                    <div id="stats-container">
+                        <!-- Stats will be populated here -->
+                    </div>
+                </div>
+            </div>
+            <div class="admin-users">
+                <h3>Usuarios</h3>
+                <div id="user-list">
+                    <!-- User list will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
+</body>
+</html>

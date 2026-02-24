@@ -1,0 +1,49 @@
+{
+  "$schema": "https://pages.cloudflare.com/schemas/config.json",
+  "build": {
+    "command": "npm run build",
+    "output_dir": "dist",
+    "environment": {
+      "NODE_VERSION": "20"
+    }
+  },
+  "env": {
+    "VITE_API_BASE_URL": {
+      "description": "Familia AI Backend URL",
+      "value": "https://your-familia-ai-backend.workers.dev"
+    },
+    "VITE_ENABLE_ADMIN_PANEL": {
+      "description": "Enable admin panel functionality",
+      "value": "true"
+    },
+    "VITE_ENABLE_REGISTRATION": {
+      "description": "Enable user registration",
+      "value": "true"
+    },
+    "VITE_MAX_MESSAGE_LENGTH": {
+      "description": "Maximum message length",
+      "value": "1000"
+    },
+    "VITE_AUTO_SCROLL": {
+      "description": "Enable auto-scroll in chat",
+      "value": "true"
+    }
+  },
+  "triggers": {
+    "deploy": [
+      "main",
+      "master"
+    ]
+  },
+  "functions": {
+    "routes": [
+      "/*"
+    ]
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "experiments": {
+    "buildCache": true
+  }
+}

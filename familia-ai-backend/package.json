@@ -1,0 +1,44 @@
+{
+	"name": "familia-ai-backend",
+	"version": "1.0.0",
+	"description": "Backend API para Familia AI - Asistente de IA con control parental",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"test:api": "node test-api.js",
+		"cf-typegen": "wrangler types",
+		"lint": "prettier --check .",
+		"format": "prettier --write .",
+		"setup": "echo 'Configura las variables de entorno en Cloudflare Workers'"
+	},
+	"keywords": [
+		"ai",
+		"family",
+		"chat",
+		"gemini",
+		"supabase",
+		"cloudflare-workers"
+	],
+	"author": "Enrique García",
+	"license": "MIT",
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.12.4",
+		"@types/node": "^25.3.0",
+		"@vitest/coverage-v8": "^3.0.9",
+		"node-fetch": "^3.3.2",
+		"prettier": "^3.0.0",
+		"typescript": "^5.5.2",
+		"vitest": "~3.2.0",
+		"wrangler": "^4.67.0"
+	},
+	"dependencies": {
+		"@supabase/supabase-js": "^2.97.0"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	}
+}
