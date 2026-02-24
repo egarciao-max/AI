@@ -7,7 +7,7 @@
     "PASSWORD_SALT": "familia-2026-secreto-aleatorio-123",
     "FAMILY_SECRET_CODE": "OROPEZA2026",
     "ADMIN_EMAIL": "quique@oropezas.com",
-    "ALLOWED_ORIGIN": "https://ai.oropezas.com"
+    "ALLOWED_ORIGIN": "https://ais.oropezas.com"
   },
   "env": {
     "production": {
