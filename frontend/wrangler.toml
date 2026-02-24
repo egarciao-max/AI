@@ -30,7 +30,7 @@ vars = { VITE_API_BASE_URL = "https://family-ai-backend.enriquegarciaoropeza.wor
 # Environment variables for production
 [env.production]
 name = "familia-ai-frontend"
-vars = { VITE_API_BASE_URL = "https://family-ai-backend.enriquegarciaoropeza.workers.dev" }
+vars = { VITE_API_BASE_URL = "https://oropezasai.pages.dev" }
 
 # Routes for different environments
 [triggers]
