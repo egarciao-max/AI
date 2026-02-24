@@ -1,7 +1,7 @@
 // API client for Familia AI Backend
 class FamiliaAIAPI {
   constructor() {
-    this.baseURL = 'https://your-familia-ai-backend.workers.dev'; // Replace with actual URL
+    this.baseURL = 'https://family-ai-backend.enriquegarciaoropeza.workers.dev';
     this.token = localStorage.getItem('familia_token');
     this.deviceId = localStorage.getItem('device_id') || this.generateDeviceId();
     this.deviceName = localStorage.getItem('device_name') || this.getDeviceName();

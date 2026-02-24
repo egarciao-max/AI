@@ -12,7 +12,6 @@ const elements = {
   chatHistory: document.getElementById('chat-history'),
   loginForm: document.getElementById('login-form'),
   registerForm: document.getElementById('register-form'),
-  profileSection: document.getElementById('profile-section'),
   chatSection: document.getElementById('chat-section'),
   adminPanel: document.getElementById('admin-panel'),
   userRole: document.getElementById('user-role'),
@@ -20,7 +19,9 @@ const elements = {
   messageCount: document.getElementById('message-count'),
   chatList: document.getElementById('chat-list'),
   newChatButton: document.getElementById('new-chat-button'),
-  logoutButton: document.getElementById('logout-button')
+  logoutButton: document.getElementById('logout-button'),
+  showRegister: document.getElementById('show-register'),
+  showLogin: document.getElementById('show-login')
 };
 
 // State
@@ -54,6 +55,21 @@ async function initApp() {
   });
   elements.newChatButton?.addEventListener('click', startNewChat);
   elements.logoutButton?.addEventListener('click', handleLogout);
+  
+  // Form switching
+  elements.showRegister?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showRegisterForm();
+  });
+  
+  elements.showLogin?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showLoginForm();
+  });
+  
+  // Form submissions
+  elements.loginForm?.addEventListener('submit', handleLogin);
+  elements.registerForm?.addEventListener('submit', handleRegister);
 }
 
 // UI Management
