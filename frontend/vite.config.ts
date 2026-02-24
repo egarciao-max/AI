@@ -2,12 +2,12 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  root: 'src', // Set root to src directory where index.html is located
+  root: '.', // Keep root at current directory
   build: {
-    outDir: '../dist', // Build to parent directory
+    outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      input: 'index.html', // Specify index.html as entry point (relative to root)
+      input: 'src/index.html', // Specify index.html as entry point
       output: {
         manualChunks: {
           vendor: ['axios']
