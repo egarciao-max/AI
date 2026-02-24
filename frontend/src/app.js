@@ -1,8 +1,5 @@
 // Import the API client
-import FamiliaAIAPI from './api.js';
-
-// Initialize API
-const api = new FamiliaAIAPI();
+import api from './api.js';
 
 // DOM Elements
 const elements = {
